@@ -111,3 +111,21 @@ btnJawab.onclick = () => {
   indexSoal++;
   setTimeout(() => tampilkanSoal(), 1200);
 };
+// =================== DONASI POPUP ===================
+const btnDonasi = document.getElementById("btnDonasi");
+const popupDonasi = document.getElementById("popupDonasi");
+const btnTutupPopup = document.getElementById("btnTutupPopup");
+
+btnDonasi.onclick = () => {
+  popupDonasi.style.display = "flex";
+};
+
+btnTutupPopup.onclick = () => {
+  popupDonasi.style.display = "none";
+};
+
+// Tutup popup kalau user klik di luar kotak
+popupDonasi.onclick = (e) => {
+  if (e.target === popupDonasi) popupDonasi.style.display = "none";
+};
+
