@@ -15,7 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// elemen
 const namaInput = document.getElementById("namaInput");
 const btnKirim = document.getElementById("btnKirim");
 const daftarPemain = document.getElementById("daftarPemain");
@@ -25,14 +24,22 @@ const jawabanInput = document.getElementById("jawabanInput");
 const btnJawab = document.getElementById("btnJawab");
 const hasil = document.getElementById("hasil");
 const levelSelect = document.getElementById("levelSelect");
-const donasiBtn = document.getElementById("donasiBtn");
-const popupDonasi = document.getElementById("popupDonasi");
-const tutupPopup = document.getElementById("tutupPopup");
+const skorText = document.getElementById("skorText");
 
 let namaPemain = "";
 let indexSoal = 0;
 let levelDipilih = "easy";
+let skor = 0;
 
+// 🟢 Fungsi Normalisasi agar jawaban lebih toleran
+const normalisasi = (teks) =>
+  teks
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
+    .replace(/alquran/g, "alquran")
+    .replace(/ramadan/g, "ramadhan");
+
+// 🟢 Kirim nama
 btnKirim.onclick = () => {
   namaPemain = namaInput.value.trim();
   levelDipilih = levelSelect.value;
@@ -44,6 +51,7 @@ btnKirim.onclick = () => {
   tampilkanSoal();
 };
 
+// 🟢 Daftar pemain realtime
 onValue(ref(db, "pemain/"), (snapshot) => {
   daftarPemain.innerHTML = "";
   snapshot.forEach((child) => {
@@ -54,12 +62,9 @@ onValue(ref(db, "pemain/"), (snapshot) => {
   });
 });
 
+// 🟢 Tampilkan soal
 function tampilkanSoal() {
   const soal = data[levelDipilih];
-  if (!soal || soal.length === 0) {
-    soalText.textContent = "Soal tidak ditemukan!";
-    return;
-  }
   if (indexSoal < soal.length) {
     soalText.textContent = soal[indexSoal].q;
     jawabanInput.value = "";
@@ -71,34 +76,34 @@ function tampilkanSoal() {
   }
 }
 
+// 🟢 Efek animasi
+function animasiEfek(warna) {
+  document.body.style.transition = "background-color 0.4s";
+  document.body.style.backgroundColor = warna;
+  setTimeout(() => {
+    document.body.style.backgroundColor = "#e8f6ff"; // kembali ke biru muda
+  }, 500);
+}
+
+// 🟢 Saat kirim jawaban
 btnJawab.onclick = () => {
   const soal = data[levelDipilih];
-  const jawaban = jawabanInput.value.trim().toLowerCase();
- // Normalisasi jawaban agar lebih toleran
-const normalisasi = (teks) =>
-  teks
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "") // hapus spasi, tanda baca
-    .replace(/alquran/g, "alquran") // penyesuaian khusus istilah umum
+  const jawaban = jawabanInput.value.trim();
+  const benar = normalisasi(soal[indexSoal].a);
+  const user = normalisasi(jawaban);
 
-const benar = normalisasi(soal[indexSoal].a);
-const user = normalisasi(jawaban);
-
-if (user === benar) {
-  hasil.textContent = "✅ Benar!";
-} else {
-  hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
-}
+  if (user === benar) {
+    hasil.textContent = "✅ Benar!";
+    hasil.style.color = "green";
+    skor += 10;
+    skorText.textContent = `Skor Kamu: ${skor}`;
+    animasiEfek("#b2ffb2"); // hijau lembut
+  } else {
+    hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
+    hasil.style.color = "red";
+    animasiEfek("#ffb2b2"); // merah lembut
+  }
 
   indexSoal++;
   setTimeout(tampilkanSoal, 1000);
 };
-
-// Popup Donasi
-donasiBtn.onclick = () => {
-  popupDonasi.style.display = "flex";
-};
-tutupPopup.onclick = () => {
-  popupDonasi.style.display = "none";
-};
-
