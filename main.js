@@ -112,7 +112,7 @@ btnJawab.onclick = () => {
   setTimeout(() => tampilkanSoal(), 1200);
 };
 // =================== DONASI POPUP ===================
-const btnDonasi = document.getElementById("btnDonasi");
+const btnDonasi = document.getElementById("donasiBtn");
 const popupDonasi = document.getElementById("popupDonasi");
 const btnTutupPopup = document.getElementById("btnTutupPopup");
 
@@ -128,4 +128,5 @@ btnTutupPopup.onclick = () => {
 popupDonasi.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
+
 
