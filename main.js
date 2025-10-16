@@ -31,19 +31,16 @@ let indexSoal = 0;
 let levelDipilih = "easy";
 let skor = 0;
 
-// 🟢 Fungsi Normalisasi agar jawaban lebih toleran
-const normalisasi = (teks) =>
-  teks
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
-    .replace(/alquran/g, "alquran")
-    .replace(/ramadan/g, "ramadhan");
+// 🟢 Normalisasi jawaban biar lebih toleran
+function normalisasi(teks) {
+  return teks.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
 
 // 🟢 Kirim nama
 btnKirim.onclick = () => {
   namaPemain = namaInput.value.trim();
   levelDipilih = levelSelect.value;
-  if (namaPemain === "") return alert("Isi nama dulu!");
+  if (namaPemain === "") return alert("Isi nama dulu! yah Lur");
 
   push(ref(db, "pemain/"), { nama: namaPemain, level: levelDipilih });
   document.getElementById("formNama").style.display = "none";
@@ -58,6 +55,7 @@ onValue(ref(db, "pemain/"), (snapshot) => {
     const val = child.val();
     const li = document.createElement("li");
     li.textContent = `${val.nama} (${val.level})`;
+    li.classList.add("pemain-item");
     daftarPemain.appendChild(li);
   });
 });
@@ -65,45 +63,51 @@ onValue(ref(db, "pemain/"), (snapshot) => {
 // 🟢 Tampilkan soal
 function tampilkanSoal() {
   const soal = data[levelDipilih];
+  if (!soal || soal.length === 0) {
+    soalText.textContent = "Tidak ada soal tersedia!";
+    return;
+  }
+
   if (indexSoal < soal.length) {
     soalText.textContent = soal[indexSoal].q;
     jawabanInput.value = "";
     hasil.textContent = "";
   } else {
-    soalText.textContent = `Kuis ${levelDipilih} selesai! Terima kasih, ${namaPemain}! 🎉`;
+    soalText.textContent = `🎉 Kuis ${levelDipilih} selesai! Terima kasih, ${namaPemain}!`;
     jawabanInput.style.display = "none";
     btnJawab.style.display = "none";
   }
 }
 
-// 🟢 Efek animasi
+// 🟢 Efek animasi warna background
 function animasiEfek(warna) {
-  document.body.style.transition = "background-color 0.4s";
+  document.body.style.transition = "background-color 0.3s ease";
   document.body.style.backgroundColor = warna;
   setTimeout(() => {
-    document.body.style.backgroundColor = "#e8f6ff"; // kembali ke biru muda
-  }, 500);
+    document.body.style.backgroundColor = "#e8f6ff"; // warna awal
+  }, 400);
 }
 
-// 🟢 Saat kirim jawaban
+// 🟢 Saat jawab
 btnJawab.onclick = () => {
   const soal = data[levelDipilih];
-  const jawaban = jawabanInput.value.trim();
-  const benar = normalisasi(soal[indexSoal].a);
-  const user = normalisasi(jawaban);
+  if (!soal || indexSoal >= soal.length) return;
 
-  if (user === benar) {
-    hasil.textContent = "✅ Benar!";
+  const jawabanUser = normalisasi(jawabanInput.value.trim());
+  const jawabanBenar = normalisasi(soal[indexSoal].a);
+
+  if (jawabanUser === jawabanBenar) {
+    hasil.innerHTML = "✅ <b>Benar!</b>";
     hasil.style.color = "green";
     skor += 10;
     skorText.textContent = `Skor Kamu: ${skor}`;
-    animasiEfek("#b2ffb2"); // hijau lembut
+    animasiEfek("#b7ffb7");
   } else {
-    hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
+    hasil.innerHTML = `❌ Salah! Jawaban: <b>${soal[indexSoal].a}</b>`;
     hasil.style.color = "red";
-    animasiEfek("#ffb2b2"); // merah lembut
+    animasiEfek("#ffb7b7");
   }
 
   indexSoal++;
-  setTimeout(tampilkanSoal, 1000);
+  setTimeout(() => tampilkanSoal(), 1200);
 };
