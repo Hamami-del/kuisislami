@@ -69,6 +69,68 @@
     width: 80%;
     max-width: 350px;
   }
+  /* === Tombol Donasi === */
+.btn-donasi {
+  background: #ffcc00;
+  color: #000;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-donasi:hover {
+  background: #ffb700;
+}
+
+/* === Popup Donasi === */
+.popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 85%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: muncul 0.4s ease;
+}
+
+@keyframes muncul {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.btn-dana {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #1e90ff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#btnTutupPopup {
+  margin-top: 10px;
+  background: #ccc;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -121,5 +183,6 @@
   <script type="module" src="main.js"></script>
 </body>
 </html>
+
 
 
