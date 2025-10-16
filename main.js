@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 import { data } from "./soal.js";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyB35RYpFoHPFOFbQhr6rtbAWiWdGbta0I4",
   authDomain: "kuis-hamami.firebaseapp.com",
@@ -16,6 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// elemen
 const namaInput = document.getElementById("namaInput");
 const btnKirim = document.getElementById("btnKirim");
 const daftarPemain = document.getElementById("daftarPemain");
@@ -25,6 +25,9 @@ const jawabanInput = document.getElementById("jawabanInput");
 const btnJawab = document.getElementById("btnJawab");
 const hasil = document.getElementById("hasil");
 const levelSelect = document.getElementById("levelSelect");
+const donasiBtn = document.getElementById("donasiBtn");
+const popupDonasi = document.getElementById("popupDonasi");
+const tutupPopup = document.getElementById("tutupPopup");
 
 let namaPemain = "";
 let indexSoal = 0;
@@ -53,6 +56,10 @@ onValue(ref(db, "pemain/"), (snapshot) => {
 
 function tampilkanSoal() {
   const soal = data[levelDipilih];
+  if (!soal || soal.length === 0) {
+    soalText.textContent = "Soal tidak ditemukan!";
+    return;
+  }
   if (indexSoal < soal.length) {
     soalText.textContent = soal[indexSoal].q;
     jawabanInput.value = "";
@@ -72,7 +79,14 @@ btnJawab.onclick = () => {
   } else {
     hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
   }
-
   indexSoal++;
   setTimeout(tampilkanSoal, 1000);
+};
+
+// Popup Donasi
+donasiBtn.onclick = () => {
+  popupDonasi.style.display = "flex";
+};
+tutupPopup.onclick = () => {
+  popupDonasi.style.display = "none";
 };
