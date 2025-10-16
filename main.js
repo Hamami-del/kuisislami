@@ -74,11 +74,22 @@ function tampilkanSoal() {
 btnJawab.onclick = () => {
   const soal = data[levelDipilih];
   const jawaban = jawabanInput.value.trim().toLowerCase();
-  if (jawaban === soal[indexSoal].a.toLowerCase()) {
-    hasil.textContent = "✅ Benar!";
-  } else {
-    hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
-  }
+ // Normalisasi jawaban agar lebih toleran
+const normalisasi = (teks) =>
+  teks
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "") // hapus spasi, tanda baca
+    .replace(/alquran/g, "alquran") // penyesuaian khusus istilah umum
+
+const benar = normalisasi(soal[indexSoal].a);
+const user = normalisasi(jawaban);
+
+if (user === benar) {
+  hasil.textContent = "✅ Benar!";
+} else {
+  hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
+}
+
   indexSoal++;
   setTimeout(tampilkanSoal, 1000);
 };
@@ -90,3 +101,4 @@ donasiBtn.onclick = () => {
 tutupPopup.onclick = () => {
   popupDonasi.style.display = "none";
 };
+
