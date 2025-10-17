@@ -1,22 +1,18 @@
 export const data = {
   agama: [
-    { q: "Kitab suci umat Islam?", a: "Al-Qur'an" },
-    { q: "Bulan puasa?", a: "Ramadhan" },
-    // ...soal agama lainnya
+    { q: "Kitab suci umat Islam adalah?", a: "Al-Qur'an" },
+    { q: "Bulan puasa dalam Islam disebut?", a: "Ramadhan" }
   ],
   inggris: [
-    { q: "What is the opposite of 'hot'?", a: "Cold" },
-    { q: "Translate: 'Saya suka apel'?", a: "I like apples" },
-    // ...soal bahasa inggris
+    { q: "What is the opposite of 'cold'?", a: "Hot" },
+    { q: "Translate 'buku' to English.", a: "Book" }
   ],
   matematika: [
-    { q: "5 + 7 = ?", a: "12" },
-    { q: "12 × 3 = ?", a: "36" },
-    // ...soal matematika
+    { q: "2 + 2 = ?", a: "4" },
+    { q: "10 ÷ 2 = ?", a: "5" }
   ],
   indonesia: [
     { q: "Antonim dari 'besar' adalah?", a: "Kecil" },
-    { q: "Kata dasar dari 'berlari' adalah?", a: "Lari" },
-    // ...soal bahasa indonesia
-  ],
+    { q: "Sinonim dari 'cantik' adalah?", a: "Indah" }
+  ]
 };
