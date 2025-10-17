@@ -62,7 +62,7 @@ onValue(ref(db, "pemain/"), (snapshot) => {
 
 // 🟢 Tampilkan soal
 function tampilkanSoal() {
-  const soal = data[levelDipilih];
+  const soal = data[pelajaranDipilih][levelDipilih];
   if (!soal || soal.length === 0) {
     soalText.textContent = "Tidak ada soal tersedia!";
     return;
@@ -73,10 +73,12 @@ function tampilkanSoal() {
     jawabanInput.value = "";
     hasil.textContent = "";
   } else {
-    soalText.textContent = `🎉 Kuis ${levelDipilih} selesai! Terima kasih, ${namaPemain}!`;
+    soalText.textContent = `🎉 Kuis ${pelajaranDipilih.toUpperCase()} level ${levelDipilih} selesai! Terima kasih, ${namaPemain}!`;
     jawabanInput.style.display = "none";
     btnJawab.style.display = "none";
   }
+}
+
 }
 
 // 🟢 Efek animasi warna background
@@ -139,6 +141,7 @@ btnTutupPopup.onclick = () => {
 popupDonasi.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
+
 
 
 
