@@ -1,207 +1,123 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kuis Islami • By Hamami</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: #e6f2fa;
-    text-align: center;
-    padding: 30px;
-  }
-  h1 { color:#1e73be; margin-bottom: 20px; }
-  .box {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    width: 320px;
-    margin: 15px auto;
-    padding: 20px;
-  }
-  input, select {
-    width: 90%;
-    padding: 8px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  button {
-    background: #1e73be;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  button:hover { background: #155d9b; }
-  ul { list-style: none; padding: 0; margin: 0; }
-  li {
-    background: #f5f9ff;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 6px;
-  }
-  #donasiBtn {
-    background: gold;
-    color: #000;
-    font-weight: 600;
-    padding: 10px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-top: 20px;
-    width: 80%;
-  }
-  #popupDonasi {
-    display: none;
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-  }
-  #popupDonasi .isi {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    width: 80%;
-    max-width: 350px;
-  }
-  /* === Tombol Donasi === */
-.btn-donasi {
-  background: #040F07;
-  color: #000;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.btn-donasi:hover {
-  background: #ffb700;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuis Islami • By Hamami</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, #f9fafb, #e0f2f1);
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+    h1 { color: #0b8457; }
+    #formNama, #kuisContainer { margin-top: 20px; }
+    input, select, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #0b8457;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    button:hover { background: #096647; }
+    #donasiBtn {
+      margin-top: 25px;
+      background: #ff5b5b;
+      border: none;
+    }
+    #donasiBtn:hover { background: #d94444; }
 
-/* === Popup Donasi === */
-.popup {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  width: 85%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  animation: muncul 0.4s ease;
-}
-
-@keyframes muncul {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.btn-dana {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #1e90ff;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-#btnTutupPopup {
-  margin-top: 10px;
-  background: #ccc;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-</style>
+    /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeIn 0.4s ease;
+    }
+    .popup-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      width: 90%;
+      max-width: 380px;
+      text-align: center;
+      animation: popScale 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popScale {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .popup-content h2 {
+      color: #0b8457;
+      margin-bottom: 10px;
+    }
+    .popup-content button {
+      background: #0b8457;
+      margin-top: 10px;
+    }
+    #skorText {
+      font-weight: bold;
+      font-size: 20px;
+      color: #0b8457;
+      transition: all 0.3s ease;
+    }
+  </style>
 </head>
 <body>
+  <h1>Kuis Islami • By Hamami</h1>
+  <p>Kita belajar bersama, yuu 🌙</p>
 
-<h1>Kuis Islami • By Hamami</h1>
-<h2> Kita belajar Bersama Yuu </h2>
-<div id="formNama" class="box">
-  <h3>Masukkan Namamu</h3>
-  <input id="namaInput" type="text" placeholder="Tulis namamu...">
-  <select id="levelSelect">
-    <option value="none">Pilih Levelmu</option>
-    <option value="easy">Mudah</option>
-    <option value="medium">Sedang</option>
-    <option value="hard">Sulit</option>
-  </select><br>
-  <button id="btnKirim">Mulai</button>
-</div>
-<div class="menu">
-  <h2>Pilih Pelajaran</h2>
-  <select id="subjectSelect">
-    <option value="agama">Agama Islam</option>
-    <option value="inggris">Bahasa Inggris</option>
-    <option value="matematika">Matematika</option>
-    <option value="indonesia">Bahasa Indonesia</option>
-  </select>
-  <button id="mulaiBtn">Mulai Kuis</button>
-</div>
-
-<div id="kuisContainer" class="box" style="display:none;">
-  <p id="soalText">Memuat pertanyaan...</p>
-  <input id="jawabanInput" placeholder="Tulis jawabanmu">
-  <button id="btnJawab">Kirim Jawaban</button>
-  <p id="skorText" style="font-weight:bold; color:#008000;">Skor Kamu: 0</p>
-  <p id="hasil"></p>
-</div>
-
-<div class="box">
-  <h7>📋 Daftar Nama Yang Pernah Memainkan Game </h7>
-  <ul id="daftarPemain"></ul>
-</div>
-
-<button id="donasiBtn">💖 Donasi via DANA</button><br>
-  <h7> Copyright - Hamami 2025 </h7>
-
-<!-- Popup Donasi -->
-<div id="popupDonasi" class="popup">
-  <div class="popup-content">
-    <h2>💖 Dukunganmu sangat berarti!</h2>
-    <p>
-      Dukunganmu membantu pengembangan <b>Kuis Islami by Hamami</b> agar terus berkembang
-      dan memberi manfaat bagi banyak orang.
-    </p>
-    <p>Terima kasih atas kebaikanmu 🙏</p>
-    <a id="btnDana" href="https://link.dana.id/minta/[GANTI_DENGAN_LINK_DANA_KAMU]" target="_blank" class="btn-dana">Donasi via DANA</a>
-    <button id="btnTutupPopup">Tutup</button>
+  <div id="formNama">
+    <input id="namaInput" placeholder="Masukkan Namamu" />
+    <select id="levelSelect">
+      <option value="agama">Agama</option>
+      <option value="inggris">Bahasa Inggris</option>
+      <option value="matematika">Matematika</option>
+      <option value="indonesia">Bahasa Indonesia</option>
+    </select>
+    <button id="btnKirim">Mulai</button>
   </div>
-</div>
 
-<!-- Import Firebase -->
-  <script type="module" src="firebase-config.js"></script>
-  <script type="module" src="soal.js"></script>
+  <div id="kuisContainer" style="display:none;">
+    <p id="soalText"></p>
+    <input id="jawabanInput" placeholder="Tulis jawabanmu di sini" />
+    <button id="btnJawab">Jawab</button>
+    <p id="hasil"></p>
+    <p>Skor: <span id="skorText">0</span></p>
+  </div>
+
+  <ul id="daftarPemain"></ul>
+
+  <button id="donasiBtn">💖 Donasi via DANA</button>
+
+  <!-- Popup Donasi -->
+  <div id="popupDonasi" class="popup">
+    <div class="popup-content">
+      <h2>💖 Terima kasih!</h2>
+      <p>Dukunganmu membantu <b>Kuis Islami by Hamami</b> terus berkembang dan memberi manfaat bagi banyak orang.</p>
+      <p>Scan QR DANA kamu untuk berdonasi dan semoga rezekimu dilipatgandakan. 🤲</p>
+      <button id="tutupPopup">Tutup</button>
+    </div>
+  </div>
+
   <script type="module" src="main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
