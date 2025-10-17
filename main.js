@@ -67,15 +67,13 @@ btnKirim.onclick = () => {
   tampilkanSoal();
 };
 
-// Daftar pemain realtime
+// Daftar pemain realtime (disembunyikan dari tampilan)
 onValue(ref(db, "pemain/"), (snapshot) => {
-  daftarPemain.innerHTML = "";
-  snapshot.forEach((child) => {
-    const val = child.val();
-    const li = document.createElement("li");
-    li.textContent = `${val.nama} (${val.level})`;
-    daftarPemain.appendChild(li);
-  });
+  // Data tetap tersimpan di Firebase,
+  // tapi tidak ditampilkan di halaman web.
+  console.log("Data pemain tersimpan:", snapshot.val());
+});
+
 });
 
 // Tampilkan soal
@@ -120,3 +118,4 @@ btnJawab.onclick = () => {
 donasiBtn.onclick = () => popupDonasi.style.display = "flex";
 tutupPopup.onclick = () => popupDonasi.style.display = "none";
 window.onclick = (e) => { if (e.target === popupDonasi) popupDonasi.style.display = "none"; };
+
