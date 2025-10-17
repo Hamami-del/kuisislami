@@ -50,7 +50,7 @@ export const data = {
   { q: "Pakaian yang digunakan saat ihram bagi laki-laki adalah?", a: "Dua lembar kain tanpa jahitan" },
   { q: "Membaca surah Al-Fatihah dalam shalat adalah termasuk rukun atau sunnah shalat?", a: "Rukun shalat" },
   { q: "Rukun Islam yang kelima (bagi yang mampu) adalah?", a: "Melaksanakan ibadah haji" },
-  { q: "Nama lain hari kiamat yang berarti hari pembalasan adalah?", a: "Yaumul Jaza" }
+  { q: "Nama lain hari kiamat yang berarti hari pembalasan adalah?", a: "Yaumul Jaza" },
   ],
   inggris: [
   { q: "What is the opposite of 'cold'?", a: "Hot" },
@@ -104,7 +104,7 @@ export const data = {
   { q: "She is accustomed ___ (wake) up early.", a: "to waking" },
   { q: "The opposite of 'temporary' is...", a: "permanent" },
   { q: "If they had studied, they ___ (pass) the exam. (Third Conditional)", a: "would have passed" },
-  { q: "What is the past tense of 'bear' (menanggung)?", a: "bore" }
+  { q: "What is the past tense of 'bear' (menanggung)?", a: "bore" },
   ],
   matematika: [
     { q: "Hasil dari 12 + 8 adalah?", a: "20" },
@@ -157,7 +157,7 @@ export const data = {
     { q: "Nilai π (pi) dibulatkan dua desimal adalah?", a: "3.14" },
     { q: "Hasil dari 25 × 4 − 50 adalah?", a: "50" },
     { q: "Jumlah sudut pada segitiga adalah?", a: "180 derajat" },
-    { q: "Jika 10 liter air dituangkan ke 5 botol sama besar, tiap botol berisi?", a: "2" }
+    { q: "Jika 10 liter air dituangkan ke 5 botol sama besar, tiap botol berisi?", a: "2" },
   ]
   indonesia: [
   { q: "Antonim dari 'besar' adalah?", a: "Kecil" },
@@ -211,9 +211,10 @@ export const data = {
   { q: "Sebuah paragraf yang kalimat utamanya berada di akhir paragraf disebut?", a: "Induktif" },
   { q: "Jenis teks yang berisi fakta dan data secara objektif adalah?", a: "Eksposisi" },
   { q: "Penggunaan huruf kapital yang benar untuk nama hari adalah?", a: "Senin/Selasa/Rabu (Kapital di awal)" },
-  { q: "Majas yang menggunakan kata 'seperti' atau 'laksana' untuk membandingkan adalah?", a: "Simile" }
+  { q: "Majas yang menggunakan kata 'seperti' atau 'laksana' untuk membandingkan adalah?", a: "Simile" },
   ]
 };
+
 
 
 
