@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 import { data } from "./soal.js";
 
 const firebaseConfig = {
@@ -12,13 +12,13 @@ const firebaseConfig = {
   appId: "1:955115071133:web:c42d2f365082c74bf39674"
 };
 
+// 🔹 Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Elemen DOM
+// 🔹 Ambil elemen DOM
 const namaInput = document.getElementById("namaInput");
 const btnKirim = document.getElementById("btnKirim");
-const daftarPemain = document.getElementById("daftarPemain");
 const kuisContainer = document.getElementById("kuisContainer");
 const soalText = document.getElementById("soalText");
 const jawabanInput = document.getElementById("jawabanInput");
@@ -35,12 +35,12 @@ let indexSoal = 0;
 let levelDipilih = "agama";
 let skor = 0;
 
-// Normalisasi teks jawaban
+// 🔹 Normalisasi teks
 function normalisasi(teks) {
   return teks.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-// Animasi angka skor
+// 🔹 Animasi skor
 function animasiSkor(nilaiBaru) {
   let nilaiSekarang = parseInt(skorText.textContent);
   const step = nilaiBaru > nilaiSekarang ? 1 : -1;
@@ -51,34 +51,39 @@ function animasiSkor(nilaiBaru) {
   }, 20);
 }
 
-// Kirim nama dan mulai kuis
+// 🔹 Saat klik tombol "Mulai"
 btnKirim.onclick = () => {
   namaPemain = namaInput.value.trim();
   levelDipilih = levelSelect.value;
 
-  if (namaPemain === "") return alert("Isi nama dulu! 🙏");
+  if (namaPemain === "") {
+    alert("Isi nama dulu, ya! 🙏");
+    return;
+  }
 
-  push(ref(db, "pemain/"), { nama: namaPemain, level: levelDipilih });
+  // Kirim data ke Firebase (nama dan pelajaran)
+  push(ref(db, "pemain/"), {
+    nama: namaPemain,
+    level: levelDipilih,
+    waktu: new Date().toLocaleString("id-ID")
+  });
+
+  // Sembunyikan form, tampilkan kuis
   document.getElementById("formNama").style.display = "none";
   kuisContainer.style.display = "block";
+
+  // Reset progres
   indexSoal = 0;
   skor = 0;
   skorText.textContent = "0";
+
   tampilkanSoal();
 };
 
-// Daftar pemain realtime (disembunyikan dari tampilan)
-onValue(ref(db, "pemain/"), (snapshot) => {
-  // Data tetap tersimpan di Firebase,
-  // tapi tidak ditampilkan di halaman web.
-  console.log("Data pemain tersimpan:", snapshot.val());
-});
-
-});
-
-// Tampilkan soal
+// 🔹 Fungsi tampilkan soal
 function tampilkanSoal() {
   const soal = data[levelDipilih];
+
   if (!soal || soal.length === 0) {
     soalText.textContent = "❌ Tidak ada soal untuk pelajaran ini.";
     return;
@@ -96,7 +101,7 @@ function tampilkanSoal() {
   jawabanInput.value = "";
 }
 
-// Cek jawaban
+// 🔹 Saat jawab soal
 btnJawab.onclick = () => {
   const soal = data[levelDipilih];
   const jawaban = normalisasi(jawabanInput.value);
@@ -114,8 +119,17 @@ btnJawab.onclick = () => {
   setTimeout(tampilkanSoal, 900);
 };
 
-// Popup donasi
-donasiBtn.onclick = () => popupDonasi.style.display = "flex";
-tutupPopup.onclick = () => popupDonasi.style.display = "none";
-window.onclick = (e) => { if (e.target === popupDonasi) popupDonasi.style.display = "none"; };
+// 🔹 Tombol Donasi
+donasiBtn.onclick = () => {
+  popupDonasi.style.display = "flex";
+};
 
+// 🔹 Tutup popup
+tutupPopup.onclick = () => {
+  popupDonasi.style.display = "none";
+};
+
+// 🔹 Tutup popup kalau klik di luar kotak
+window.onclick = (e) => {
+  if (e.target === popupDonasi) popupDonasi.style.display = "none";
+};
