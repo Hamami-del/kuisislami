@@ -212,8 +212,9 @@ export const data = {
   { q: "Jenis teks yang berisi fakta dan data secara objektif adalah?", a: "Eksposisi" },
   { q: "Penggunaan huruf kapital yang benar untuk nama hari adalah?", a: "Senin/Selasa/Rabu (Kapital di awal)" },
   { q: "Majas yang menggunakan kata 'seperti' atau 'laksana' untuk membandingkan adalah?", a: "Simile" },
-  ]
+  ],
 };
+
 
 
 
