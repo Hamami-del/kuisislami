@@ -89,12 +89,23 @@ function animasiEfek(warna) {
 }
 
 // 🟢 Saat jawab
-btnJawab.onclick = () => {
-  const soal = data[levelDipilih];
-  if (!soal || indexSoal >= soal.length) return;
+btnKirim.onclick = () => {
+  namaPemain = namaInput.value.trim();
+  levelDipilih = levelSelect.value;
+  pelajaranDipilih = document.getElementById("subjectSelect").value;
 
-  const jawabanUser = normalisasi(jawabanInput.value.trim());
-  const jawabanBenar = normalisasi(soal[indexSoal].a);
+  if (namaPemain === "") return alert("Isi nama dulu! yah Lur");
+
+  push(ref(db, "pemain/"), {
+    nama: namaPemain,
+    level: levelDipilih,
+    pelajaran: pelajaranDipilih,
+  });
+
+  document.getElementById("formNama").style.display = "none";
+  kuisContainer.style.display = "block";
+  tampilkanSoal();
+};
 
   if (jawabanUser === jawabanBenar) {
     hasil.innerHTML = "✅ <b>Benar!</b>";
@@ -128,5 +139,6 @@ btnTutupPopup.onclick = () => {
 popupDonasi.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
+
 
 
