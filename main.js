@@ -1,3 +1,5 @@
+console.log("✅ main.js berhasil dijalankan");
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 import { data } from "./soal.js";
@@ -133,3 +135,4 @@ tutupPopup.onclick = () => {
 window.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
+
