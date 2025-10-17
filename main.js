@@ -15,7 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Elemen
+// Elemen DOM
 const namaInput = document.getElementById("namaInput");
 const btnKirim = document.getElementById("btnKirim");
 const daftarPemain = document.getElementById("daftarPemain");
@@ -26,7 +26,6 @@ const btnJawab = document.getElementById("btnJawab");
 const hasil = document.getElementById("hasil");
 const levelSelect = document.getElementById("levelSelect");
 const skorText = document.getElementById("skorText");
-
 const donasiBtn = document.getElementById("donasiBtn");
 const popupDonasi = document.getElementById("popupDonasi");
 const tutupPopup = document.getElementById("tutupPopup");
@@ -49,18 +48,22 @@ function animasiSkor(nilaiBaru) {
     nilaiSekarang += step;
     skorText.textContent = nilaiSekarang;
     if (nilaiSekarang === nilaiBaru) clearInterval(interval);
-  }, 30);
+  }, 20);
 }
 
-// Kirim nama
+// Kirim nama dan mulai kuis
 btnKirim.onclick = () => {
   namaPemain = namaInput.value.trim();
   levelDipilih = levelSelect.value;
+
   if (namaPemain === "") return alert("Isi nama dulu! 🙏");
 
   push(ref(db, "pemain/"), { nama: namaPemain, level: levelDipilih });
   document.getElementById("formNama").style.display = "none";
   kuisContainer.style.display = "block";
+  indexSoal = 0;
+  skor = 0;
+  skorText.textContent = "0";
   tampilkanSoal();
 };
 
@@ -77,21 +80,27 @@ onValue(ref(db, "pemain/"), (snapshot) => {
 
 // Tampilkan soal
 function tampilkanSoal() {
-  const soal = data[levelDipilih].easy;
+  const soal = data[levelDipilih];
+  if (!soal || soal.length === 0) {
+    soalText.textContent = "❌ Tidak ada soal untuk pelajaran ini.";
+    return;
+  }
+
   if (indexSoal >= soal.length) {
     soalText.textContent = `🎉 Kuis selesai! Terima kasih, ${namaPemain}!`;
     jawabanInput.style.display = "none";
     btnJawab.style.display = "none";
     return;
   }
+
   soalText.textContent = soal[indexSoal].q;
   hasil.textContent = "";
   jawabanInput.value = "";
 }
 
-// Periksa jawaban
+// Cek jawaban
 btnJawab.onclick = () => {
-  const soal = data[levelDipilih].easy;
+  const soal = data[levelDipilih];
   const jawaban = normalisasi(jawabanInput.value);
   const benar = normalisasi(soal[indexSoal].a);
 
@@ -104,16 +113,10 @@ btnJawab.onclick = () => {
   }
 
   indexSoal++;
-  setTimeout(tampilkanSoal, 800);
+  setTimeout(tampilkanSoal, 900);
 };
 
 // Popup donasi
-donasiBtn.onclick = () => {
-  popupDonasi.style.display = "flex";
-};
-tutupPopup.onclick = () => {
-  popupDonasi.style.display = "none";
-};
-window.onclick = (e) => {
-  if (e.target === popupDonasi) popupDonasi.style.display = "none";
-};
+donasiBtn.onclick = () => popupDonasi.style.display = "flex";
+tutupPopup.onclick = () => popupDonasi.style.display = "none";
+window.onclick = (e) => { if (e.target === popupDonasi) popupDonasi.style.display = "none"; };
