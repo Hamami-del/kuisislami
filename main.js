@@ -109,14 +109,18 @@ btnJawab.onclick = () => {
   const jawaban = normalisasi(jawabanInput.value);
   const benar = normalisasi(soal[indexSoal].a);
 
-  if (jawaban === benar) {
-    hasil.textContent = "✅ Benar!";
-    skor += 10;
-    animasiSkor(skor);
-  } else {
-    hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
-  }
+  // Hapus class lama
+hasil.classList.remove("benar", "salah");
 
+if (jawaban === benar) {
+  hasil.textContent = "✅ Benar!";
+  hasil.classList.add("benar");  // tambahkan animasi
+  skor += 10;
+  animasiSkor(skor);
+} else {
+  hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
+  hasil.classList.add("salah");  // tambahkan animasi
+}
   indexSoal++;
   setTimeout(tampilkanSoal, 900);
 };
@@ -135,3 +139,4 @@ tutupPopup.onclick = () => {
 window.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
+
