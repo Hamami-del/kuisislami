@@ -1,7 +1,7 @@
 export const data = {
   agama: [
   { q: "Kitab suci umat Islam adalah?", a: "Al-Qur'an" },
-  { q: "Bulan puasa dalam Islam disebut?", a: "Ramadhan" }
+  { q: "Bulan puasa dalam Islam disebut?", a: "Ramadhan" },
   { q: "Nabi terakhir yang diutus Allah SWT adalah?", a: "Nabi Muhammad SAW" },
   { q: "Rukun Islam yang pertama adalah?", a: "Mengucapkan dua kalimat syahadat" },
   { q: "Rukun Islam yang kedua adalah?", a: "Mendirikan shalat" },
@@ -54,7 +54,7 @@ export const data = {
   ],
   inggris: [
   { q: "What is the opposite of 'cold'?", a: "Hot" },
-  { q: "Translate 'buku' to English.", a: "Book" }
+  { q: "Translate 'buku' to English.", a: "Book" },
   { q: "She ___ (go) to the cinema last night.", a: "went" },
   { q: "What is the plural form of 'child'?", a: "children" },
   { q: "The opposite of 'huge' is...", a: "tiny" },
@@ -108,7 +108,7 @@ export const data = {
   ],
   matematika: [
   { q: "2 + 2 = ?", a: "4" },
-  { q: "10 ÷ 2 = ?", a: "5" }
+  { q: "10 ÷ 2 = ?", a: "5" },
   { q: "Berapakah hasil dari $15 \times 8 - 20$?", a: "100" },
   { q: "Bentuk pecahan biasa dari $0,25$ adalah?", a: "1/4" },
   { q: "Nilai dari $\\sqrt{144}$ adalah?", a: "12" },
@@ -162,7 +162,7 @@ export const data = {
   ],
   indonesia: [
   { q: "Antonim dari 'besar' adalah?", a: "Kecil" },
-  { q: "Sinonim dari 'cantik' adalah?", a: "Indah" }
+  { q: "Sinonim dari 'cantik' adalah?", a: "Indah" },
   { q: "Kata dasar dari 'melakukan' adalah?", a: "laku" },
   { q: "Jenis kalimat yang mengandung perintah atau larangan adalah kalimat?", a: "Imperatif" },
   { q: "Awalan yang menunjukkan makna 'berbuat atau menjadi' adalah?", a: "ber-" },
@@ -215,6 +215,7 @@ export const data = {
   { q: "Majas yang menggunakan kata 'seperti' atau 'laksana' untuk membandingkan adalah?", a: "Simile" }
   ]
 };
+
 
 
 
