@@ -15,6 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// Elemen
 const namaInput = document.getElementById("namaInput");
 const btnKirim = document.getElementById("btnKirim");
 const daftarPemain = document.getElementById("daftarPemain");
@@ -26,21 +27,36 @@ const hasil = document.getElementById("hasil");
 const levelSelect = document.getElementById("levelSelect");
 const skorText = document.getElementById("skorText");
 
+const donasiBtn = document.getElementById("donasiBtn");
+const popupDonasi = document.getElementById("popupDonasi");
+const tutupPopup = document.getElementById("tutupPopup");
+
 let namaPemain = "";
 let indexSoal = 0;
-let levelDipilih = "easy";
+let levelDipilih = "agama";
 let skor = 0;
 
-// 🟢 Normalisasi jawaban biar lebih toleran
+// Normalisasi teks jawaban
 function normalisasi(teks) {
   return teks.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-// 🟢 Kirim nama
+// Animasi angka skor
+function animasiSkor(nilaiBaru) {
+  let nilaiSekarang = parseInt(skorText.textContent);
+  const step = nilaiBaru > nilaiSekarang ? 1 : -1;
+  const interval = setInterval(() => {
+    nilaiSekarang += step;
+    skorText.textContent = nilaiSekarang;
+    if (nilaiSekarang === nilaiBaru) clearInterval(interval);
+  }, 30);
+}
+
+// Kirim nama
 btnKirim.onclick = () => {
   namaPemain = namaInput.value.trim();
   levelDipilih = levelSelect.value;
-  if (namaPemain === "") return alert("Isi nama dulu! yah Lur");
+  if (namaPemain === "") return alert("Isi nama dulu! 🙏");
 
   push(ref(db, "pemain/"), { nama: namaPemain, level: levelDipilih });
   document.getElementById("formNama").style.display = "none";
@@ -48,100 +64,56 @@ btnKirim.onclick = () => {
   tampilkanSoal();
 };
 
-// 🟢 Daftar pemain realtime
+// Daftar pemain realtime
 onValue(ref(db, "pemain/"), (snapshot) => {
   daftarPemain.innerHTML = "";
   snapshot.forEach((child) => {
     const val = child.val();
     const li = document.createElement("li");
     li.textContent = `${val.nama} (${val.level})`;
-    li.classList.add("pemain-item");
     daftarPemain.appendChild(li);
   });
 });
 
-// 🟢 Tampilkan soal
+// Tampilkan soal
 function tampilkanSoal() {
-  const soal = data[pelajaranDipilih][levelDipilih];
-  if (!soal || soal.length === 0) {
-    soalText.textContent = "Tidak ada soal tersedia!";
-    return;
-  }
-
-  if (indexSoal < soal.length) {
-    soalText.textContent = soal[indexSoal].q;
-    jawabanInput.value = "";
-    hasil.textContent = "";
-  } else {
-    soalText.textContent = `🎉 Kuis ${pelajaranDipilih.toUpperCase()} level ${levelDipilih} selesai! Terima kasih, ${namaPemain}!`;
+  const soal = data[levelDipilih].easy;
+  if (indexSoal >= soal.length) {
+    soalText.textContent = `🎉 Kuis selesai! Terima kasih, ${namaPemain}!`;
     jawabanInput.style.display = "none";
     btnJawab.style.display = "none";
+    return;
   }
+  soalText.textContent = soal[indexSoal].q;
+  hasil.textContent = "";
+  jawabanInput.value = "";
 }
 
-}
+// Periksa jawaban
+btnJawab.onclick = () => {
+  const soal = data[levelDipilih].easy;
+  const jawaban = normalisasi(jawabanInput.value);
+  const benar = normalisasi(soal[indexSoal].a);
 
-// 🟢 Efek animasi warna background
-function animasiEfek(warna) {
-  document.body.style.transition = "background-color 0.3s ease";
-  document.body.style.backgroundColor = warna;
-  setTimeout(() => {
-    document.body.style.backgroundColor = "#e8f6ff"; // warna awal
-  }, 400);
-}
-
-// 🟢 Saat jawab
-btnKirim.onclick = () => {
-  namaPemain = namaInput.value.trim();
-  levelDipilih = levelSelect.value;
-  pelajaranDipilih = document.getElementById("subjectSelect").value;
-
-  if (namaPemain === "") return alert("Isi nama dulu! yah Lur");
-
-  push(ref(db, "pemain/"), {
-    nama: namaPemain,
-    level: levelDipilih,
-    pelajaran: pelajaranDipilih,
-  });
-
-  document.getElementById("formNama").style.display = "none";
-  kuisContainer.style.display = "block";
-  tampilkanSoal();
-};
-
-  if (jawabanUser === jawabanBenar) {
-    hasil.innerHTML = "✅ <b>Benar!</b>";
-    hasil.style.color = "green";
+  if (jawaban === benar) {
+    hasil.textContent = "✅ Benar!";
     skor += 10;
-    skorText.textContent = `Skor Kamu: ${skor}`;
-    animasiEfek("#b7ffb7");
+    animasiSkor(skor);
   } else {
-    hasil.innerHTML = `❌ Salah! Jawaban: <b>${soal[indexSoal].a}</b>`;
-    hasil.style.color = "red";
-    animasiEfek("#ffb7b7");
+    hasil.textContent = `❌ Salah! Jawaban: ${soal[indexSoal].a}`;
   }
 
   indexSoal++;
-  setTimeout(() => tampilkanSoal(), 1200);
+  setTimeout(tampilkanSoal, 800);
 };
-// =================== DONASI POPUP ===================
-const btnDonasi = document.getElementById("donasiBtn");
-const popupDonasi = document.getElementById("popupDonasi");
-const btnTutupPopup = document.getElementById("btnTutupPopup");
 
-btnDonasi.onclick = () => {
+// Popup donasi
+donasiBtn.onclick = () => {
   popupDonasi.style.display = "flex";
 };
-
-btnTutupPopup.onclick = () => {
+tutupPopup.onclick = () => {
   popupDonasi.style.display = "none";
 };
-
-// Tutup popup kalau user klik di luar kotak
-popupDonasi.onclick = (e) => {
+window.onclick = (e) => {
   if (e.target === popupDonasi) popupDonasi.style.display = "none";
 };
-
-
-
-
