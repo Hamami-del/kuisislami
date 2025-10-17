@@ -158,7 +158,7 @@ export const data = {
     { q: "Hasil dari 25 × 4 − 50 adalah?", a: "50" },
     { q: "Jumlah sudut pada segitiga adalah?", a: "180 derajat" },
     { q: "Jika 10 liter air dituangkan ke 5 botol sama besar, tiap botol berisi?", a: "2" },
-  ]
+  ],
   indonesia: [
   { q: "Antonim dari 'besar' adalah?", a: "Kecil" },
   { q: "Sinonim dari 'cantik' adalah?", a: "Indah" },
@@ -214,6 +214,7 @@ export const data = {
   { q: "Majas yang menggunakan kata 'seperti' atau 'laksana' untuk membandingkan adalah?", a: "Simile" },
   ]
 };
+
 
 
 
